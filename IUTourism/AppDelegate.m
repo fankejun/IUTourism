@@ -7,13 +7,46 @@
 //
 
 #import "AppDelegate.h"
+#import "CellViewController.h"
+#import "TimNavigationViewController.h"
+#import "MainViewController.h"
+#import "CommonMacro.h"
+#import "IUTourViewAppearance.h"
 
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    
+    //测试时显示沙盒路径
+    NSString * bPath = NSHomeDirectory();
+    NSLog(@"%@",bPath);    
+    
+//    //显示界面
+//    UIStoryboard *storyBoard = [UIStoryboard storyboardWithName:@"Storyboard" bundle:nil];
+//    NSString *mainvcIdentifier = nil;
+//    if (SCREEN_HEIGHT > 480) {
+//        mainvcIdentifier = @"MainViewController_iPhone5";
+//    } else {
+//        mainvcIdentifier = @"MainViewController_iPhone4";
+//    }
+//    MainViewController *mainVC = [storyBoard instantiateViewControllerWithIdentifier:mainvcIdentifier];
+//    TimNavigationViewController *nav = [[TimNavigationViewController alloc]initWithRootViewController:mainVC];
+//    self.window.rootViewController = nav;
+//    //通用的界面的设置
+//    [IUTourViewAppearance setIUTourAppearance];
+    
+//    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+//    CellViewController * cellViewCtl = [[CellViewController	 alloc]init];
+//    TimNavigationViewController *nav = [[TimNavigationViewController alloc]initWithRootViewController:cellViewCtl];
+//    self.window.rootViewController = nav;
+    
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    // Override point for customization after application launch.
+    MainViewController * mainCtl = [[MainViewController alloc]init];
+    UINavigationController * nvc = [[UINavigationController alloc]initWithRootViewController:mainCtl];
+    [self.window setRootViewController:nvc];
+    
+    [IUTourViewAppearance setIUTourAppearance];
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
     return YES;
