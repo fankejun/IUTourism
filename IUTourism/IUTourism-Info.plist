@@ -14,16 +14,19 @@
 		<dict>
 			<key>CFBundleIconFiles</key>
 			<array>
-				<string>draw</string>
+				<string>iPhoneRetina_Glossy_Icon_icon512</string>
+				<string>iPhone_Glossy_Icon_icon512</string>
 			</array>
 		</dict>
 	</dict>
+	<key>CFBundleIcons~ipad</key>
+	<dict/>
 	<key>CFBundleIdentifier</key>
 	<string>frank.${PRODUCT_NAME:rfc1034identifier}</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
-	<string>${PRODUCT_NAME}</string>
+	<string>IU爱游</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
