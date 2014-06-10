@@ -12,6 +12,8 @@
 #import "MainViewController.h"
 #import "CommonMacro.h"
 #import "IUTourViewAppearance.h"
+#import "PH4ViewController.h"
+#import "PH5ViewController.h"
 
 @implementation AppDelegate
 
@@ -41,10 +43,21 @@
 //    TimNavigationViewController *nav = [[TimNavigationViewController alloc]initWithRootViewController:cellViewCtl];
 //    self.window.rootViewController = nav;
     
+//    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+//    MainViewController * mainCtl = [[MainViewController alloc]init];
+//    UINavigationController * nvc = [[UINavigationController alloc]initWithRootViewController:mainCtl];
+//    [self.window setRootViewController:nvc];
+    
+    
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    MainViewController * mainCtl = [[MainViewController alloc]init];
-    UINavigationController * nvc = [[UINavigationController alloc]initWithRootViewController:mainCtl];
-    [self.window setRootViewController:nvc];
+    TimViewController * tempViewCtl;
+    if (SCREEN_HEIGHT > 480){
+        tempViewCtl = [[PH5ViewController alloc]init];
+    }else{
+        tempViewCtl = [[PH4ViewController alloc]init];
+    }
+    TimNavigationViewController *nav = [[TimNavigationViewController alloc]initWithRootViewController:tempViewCtl];
+    self.window.rootViewController = nav;
     
     [IUTourViewAppearance setIUTourAppearance];
     self.window.backgroundColor = [UIColor whiteColor];

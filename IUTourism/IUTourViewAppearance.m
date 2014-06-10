@@ -23,13 +23,13 @@
                                                            [UIColor whiteColor], UITextAttributeTextColor,nil]];
     
     //设置导航条 背景色
-    if (IOS_7_OR_LATER) {
-        [[TimNavigationBar appearance]setBackgroundImage:[UIImage imageNamed:@"LOGO.png"] forBarMetrics:UIBarMetricsDefault];
-        [[TimNavigationBar appearance] setBarTintColor:[UIColor colorWithHex:NAVIGATIONBAR_BACKGROUNDCOLOR]];
-    } else if(IOS_5_OR_LATER) {
-        [[TimNavigationBar appearance]setBackgroundImage:[UIImage imageNamed:@"LOGO.png"] forBarMetrics:UIBarMetricsDefault];
-        [[TimNavigationBar appearance] setTintColor:[UIColor colorWithHex:NAVIGATIONBAR_BACKGROUNDCOLOR]];
-    }
+//    if (IOS_7_OR_LATER) {
+//        [[TimNavigationBar appearance]setBackgroundImage:[UIImage imageNamed:@"headImage"] forBarMetrics:UIBarMetricsDefault];
+//        [[TimNavigationBar appearance] setBarTintColor:[UIColor colorWithHex:NAVIGATIONBAR_BACKGROUNDCOLOR]];
+//    } else if(IOS_5_OR_LATER) {
+//        [[TimNavigationBar appearance]setBackgroundImage:[UIImage imageNamed:@"headImage"] forBarMetrics:UIBarMetricsDefault];
+//        [[TimNavigationBar appearance] setTintColor:[UIColor colorWithHex:NAVIGATIONBAR_BACKGROUNDCOLOR]];
+//    }
     
     //设置搜索条 背景色
     if (IOS_7_OR_LATER) {

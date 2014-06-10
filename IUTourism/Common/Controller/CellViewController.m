@@ -49,6 +49,12 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
+    //设置导航条 背景色
+    if (IOS_7_OR_LATER) {
+        [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"head"] forBarMetrics:UIBarMetricsDefault];
+    } else if(IOS_5_OR_LATER) {
+        [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"head"] forBarMetrics:UIBarMetricsDefault];
+    }
 }
 
 - (void)viewDidLoad
@@ -57,6 +63,11 @@
     [self setLeftBarButtonWithImage:[UIImage imageNamed:@"btn_back"]];
 	[self initData];
     [self initView];
+}
+
+- (void)onLeftButtonAction:(id)sender
+{
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)initData
@@ -73,17 +84,26 @@
     mySearchBar = [[TimSearchBar alloc]init];
     [mySearchBar setFrame:CGRectMake(0, bound_heiht - searchBarHeight - 44 * ! IOS_7_OR_LATER, bound_width, searchBarHeight)];
     if (IOS_7_OR_LATER) {
-        [mySearchBar setBarTintColor:[UIColor colorWithHex:VIEWCONTROLLER_BACKGROUNDCOLOR]];
+        [mySearchBar setBarTintColor:[UIColor colorWithHex:SEARCHCONTROLLER_BACKGROUNDCOLOR]];
     } else if (IOS_5_OR_LATER) {
-        [mySearchBar setTintColor:[UIColor colorWithHex:VIEWCONTROLLER_BACKGROUNDCOLOR]];
+        [mySearchBar setTintColor:[UIColor colorWithHex:SEARCHCONTROLLER_BACKGROUNDCOLOR]];
     }
     [mySearchBar setDelegate:self];
     [self.view addSubview:mySearchBar];
     
     myTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, bound_width, bound_heiht - searchBarHeight - 44 * ! IOS_7_OR_LATER) style:UITableViewStylePlain];
+    
     [myTableView setDelegate:self];
     [myTableView setDataSource:self];
-    [self.view addSubview:myTableView];
+    //等待异步请求完之后再去加载UI
+//    [self.view addSubview:myTableView];
+    
+    //init activity
+    activityView=[[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    [activityView setCenter:CGPointMake(self.view.frame.size.width/2, self.view.frame.size.height/2)];
+    [activityView setColor:[UIColor blueColor]];
+    [activityView startAnimating];
+    [self.view addSubview:activityView];
     
     
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
@@ -121,6 +141,9 @@
     if (cell == nil){
         cell = [[CommCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:ideString WithHeight:110.0f AndWithTitle:title AndWithImageUrl:imgUrl];
     }
+    //设置选中之后的颜色
+    cell.selectedBackgroundView = [[UIView alloc]initWithFrame:cell.frame];
+    [cell.selectedBackgroundView setBackgroundColor:[UIColor colorWithRed:135.0f/255.0f green:206.0f/255.0f blue:235.0f/255.0f alpha:0.8]];
     [cell.descriptionLabel setText:dep];
     [cell.endPlaceLabel setText:gys];
     [cell.timeLabel setText:phone];
@@ -234,9 +257,12 @@
             }
         }
         [myTableView reloadData];
+        [self.view addSubview:myTableView];
     }failure:^(AFHTTPRequestOperation * operation,NSError * error){
         NSLog(@"requestFail:%@",error);
     }];
+    [activityView stopAnimating];
+    [activityView setHidden:YES];
     [operation start];
 }
 

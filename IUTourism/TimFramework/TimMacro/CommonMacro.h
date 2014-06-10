@@ -56,9 +56,10 @@ static NSString * const urlname = @""#url;
 
 
 #pragma mark -------------------- Color -------------------------------------------------------
-//100.183.254
-#define VIEWCONTROLLER_BACKGROUNDCOLOR (0x5275c6)
+
+#define VIEWCONTROLLER_BACKGROUNDCOLOR (0xFFFFFF) //原来的值:0x5275c6
 #define NAVIGATIONBAR_BACKGROUNDCOLOR (0x64B7FE)
+#define SEARCHCONTROLLER_BACKGROUNDCOLOR (0x3EA9FF) 
 
 #pragma mark ---------------------- frame ,bounds ---------------------------------------------
 #define SELF_VIEW_BOUNDS_WIDTH   self.view.bounds.size.width

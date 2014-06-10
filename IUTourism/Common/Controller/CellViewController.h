@@ -18,6 +18,8 @@
     CommCell * cell;
     float keyboardhight;
     NSURL * loadUrl;
+    
+    UIActivityIndicatorView * activityView;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil AndWithUrl:(NSURL *)url AndWithTitle:(NSString *)title;

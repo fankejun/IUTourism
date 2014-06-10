@@ -40,7 +40,7 @@
     
     UIImageView * imageView = [[UIImageView alloc]init];
     [imageView setFrame:CGRectMake(0, 0, width, height)];
-    [imageView setImageWithURL:[NSURL URLWithString:cellImage] placeholderImage:[UIImage imageNamed:@"test.jpg"]];
+    [imageView setImageWithURL:[NSURL URLWithString:cellImage] placeholderImage:[UIImage imageNamed:@"scene"]];
     [self addSubview:imageView];
     
     UILabel * title_lable = [[UILabel alloc]init];
@@ -48,11 +48,14 @@
                                      imageView.frame.size.height - lable_height,
                                      imageView.frame.size.width,
                                      lable_height)];
+    if ([cellTitle length] > 10){
+        cellTitle = [cellTitle substringToIndex:10];
+    }
     [title_lable setText:cellTitle];
     [title_lable setFont:[UIFont systemFontOfSize:15.0f]];
     [title_lable setTextAlignment:NSTextAlignmentCenter];
     [title_lable setTextColor:[UIColor whiteColor]];
-    [title_lable setBackgroundColor:[UIColor colorWithRed:0 green:0 blue:0 alpha:0.5]];
+    [title_lable setBackgroundColor:[UIColor colorWithRed:0 green:0 blue:0 alpha:0.6]];
     [imageView addSubview:title_lable];
     [imageView bringSubviewToFront:title_lable];
 }

@@ -28,10 +28,16 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
+        [self setLeftBarButtonWithImage:[UIImage imageNamed:@"btn_back"]];
         self.title = @"详情";
         loadUrlString = urlString;
     }
     return self;
+}
+
+- (void)onLeftButtonAction:(id)sender
+{
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)viewDidLoad
