@@ -72,6 +72,8 @@
 
 - (void)initData
 {
+    //收集搜索结果
+    _searchResults = [[NSMutableArray alloc]initWithCapacity:0];
     [self requestJSONWithUrl:loadUrl];
 }
 
@@ -98,14 +100,14 @@
     //等待异步请求完之后再去加载UI
 //    [self.view addSubview:myTableView];
     
-    //init activity
+    //加载进度圈
     activityView=[[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
     [activityView setCenter:CGPointMake(self.view.frame.size.width/2, self.view.frame.size.height/2)];
     [activityView setColor:[UIColor blueColor]];
     [activityView startAnimating];
     [self.view addSubview:activityView];
     
-    
+    //注册键盘消息（用在搜索框上）
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
 }
@@ -113,7 +115,10 @@
 #pragma mark - UITableView Delegate
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return [_dataArray count];
+    if (_searchResults != nil && [_searchResults count] > 0)
+        return [_searchResults count];
+    else
+        return [_dataArray count];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -126,8 +131,12 @@
     NSString * pre_url = @"http://115.28.175.177:8080";
     //Get Data
     Travel * travel;
-    if (_dataArray != nil && [_dataArray count] > 0){
-         travel = [_dataArray objectAtIndex:indexPath.row];
+    if (_searchResults != nil && [_searchResults count] > 0){
+        travel = [_searchResults objectAtIndex:indexPath.row];
+    }else{
+        if (_dataArray != nil && [_dataArray count] > 0){
+            travel = [_dataArray objectAtIndex:indexPath.row];
+        }
     }
     NSString * title = travel.tit;
     NSString * dep = travel.dep;
@@ -142,8 +151,9 @@
         cell = [[CommCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:ideString WithHeight:110.0f AndWithTitle:title AndWithImageUrl:imgUrl];
     }
     //设置选中之后的颜色
-    cell.selectedBackgroundView = [[UIView alloc]initWithFrame:cell.frame];
-    [cell.selectedBackgroundView setBackgroundColor:[UIColor colorWithRed:135.0f/255.0f green:206.0f/255.0f blue:235.0f/255.0f alpha:0.8]];
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+//    cell.selectedBackgroundView = [[UIView alloc]initWithFrame:cell.frame];
+//    [cell.selectedBackgroundView setBackgroundColor:[UIColor colorWithRed:135.0f/255.0f green:206.0f/255.0f blue:235.0f/255.0f alpha:0.8]];
     [cell.descriptionLabel setText:dep];
     [cell.endPlaceLabel setText:gys];
     [cell.timeLabel setText:phone];
@@ -155,8 +165,12 @@
     NSString * pre_url = @"http://115.28.175.177:8080/tourPhoneById/index.htm?id=";
     //Get Data
     Travel * travel;
-    if (_dataArray != nil && [_dataArray count] > 0){
-        travel = [_dataArray objectAtIndex:indexPath.row];
+    if (_searchResults != nil && [_searchResults count] > 0){
+        travel = [_searchResults objectAtIndex:indexPath.row];
+    }else{
+        if (_dataArray != nil && [_dataArray count] > 0){
+            travel = [_dataArray objectAtIndex:indexPath.row];
+        }
     }
     NSString * travelID = travel.id;
     NSString * detailIndexString = [NSString stringWithFormat:@"%@%@",pre_url,travelID];
